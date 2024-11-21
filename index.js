@@ -12,7 +12,7 @@ app.use(fileupload({
     tempFileDir : '/tmp/'
 }))
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://ucclone.netlify.app',
     credentials: true,
     methods: ['GET', 'POST','PUT','DELETE'],
     headers: ['Content-Type', 'Authorization']
