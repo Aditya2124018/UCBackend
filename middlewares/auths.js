@@ -23,6 +23,7 @@ exports.isLoggedin = (req,res,next)=>{
                 })}
             
         }else{
+            
             return res.status(401).json({
                 success:false,
                 message:"Missing Token"
@@ -40,13 +41,15 @@ exports.isLoggedin = (req,res,next)=>{
 
 exports.isAdmin = (req,res,next)=>{
     try{
-        if(req.user.role !== "Admin"){
+        if(req?.user?.role !== "Admin"){
             return res.status(401).json({
                 success:false,
                 message:"This is a Protected Route only for Admin."
             })
+        }else{
+
+            next()
         }
-        next()
     }catch(error){
         console.log(error)
         res.status(500).json({

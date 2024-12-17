@@ -32,7 +32,7 @@ exports.updateItem = async(req,res)=>{
        
         const {name,description,price,type} = req.body
         
-        if(name === undefined || description === undefined  || price === undefined  || type === undefined){
+        if(!name || !description || !price || !type){
             return res.status(400).json({
                 success:false,
                 message:"Please fill all the details carefully."

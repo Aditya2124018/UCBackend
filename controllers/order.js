@@ -1,4 +1,7 @@
 const Orders = require("../models/orders")
+const Items = require("../models/items")
+const Users = require("../models/users")
+
 module.exports = {
     create: async(req,res)=>{
         try {
@@ -82,6 +85,44 @@ module.exports = {
                 success:false,
                 error:error.message,
                 message:"Order details updation failed."
+            })
+        }
+    },
+    getDetails: async(req, res)=>{
+        try{
+            const {uid, itemid} = req.body
+            const user = await Users.findById(uid)
+            const item = await Items.findById(itemid)
+             res.status(200).json({
+                success:true,
+                user:user,
+                item:item,
+                message:"Details fetched Successfully."
+
+             })
+
+        }catch(error){
+            res.status(500).json({
+                success:false,
+                error:error.message,
+                message:"Details not fetched."
+
+             })
+        }
+    },
+    userorder:async(req, res)=>{
+        try {
+            const id = req.query.id
+            const orders = await Orders.find({user:id}).populate(["user","item"])
+            res.status(200).json({
+                success:true,
+                order:orders,
+                message:"Orders data fetched successfully."
+            })
+        } catch (error) {
+            res.status(500).json({
+                success:false,
+                error:error.message
             })
         }
     }
