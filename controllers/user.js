@@ -75,6 +75,21 @@ module.exports = {
                     message:"Mobile Number must have exact Ten(10) digits."
                 })
             }
+
+            const user_exists =await Users.find({
+                $or: [
+                    { email: email },
+                    { mobile: mobile }
+                ]
+            })
+            
+            if(user_exists.length >  1){
+                return res.status(400).json({
+                    success:false,
+                    message:"Email/Mobile already exists."
+                })
+            }
+
             const response = await Users.findByIdAndUpdate(id,
                 {fname:fname,lname:lname,mobile:mobile,email:email,address:address,role:role})
             
